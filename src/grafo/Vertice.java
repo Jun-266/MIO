@@ -1,4 +1,4 @@
-package matriz_adyacencia;
+package grafo;
 
 import enums.Color;
 

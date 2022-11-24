@@ -1,9 +1,9 @@
 package ui;
 
 import enums.Color;
-import matriz_adyacencia.Arista;
-import matriz_adyacencia.MatrizAdyacencia;
-import matriz_adyacencia.Vertice;
+import grafo.Arista;
+import grafo.MatrizAdyacencia;
+import grafo.Vertice;
 
 public class Menu {
 	

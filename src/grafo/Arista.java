@@ -1,4 +1,4 @@
-package matriz_adyacencia;
+package grafo;
 
 public class Arista<T> {
 	
