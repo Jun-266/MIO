@@ -1,5 +1,6 @@
 package grafo;
 
+import java.util.ArrayList;
 import enums.Color;
 
 public class Vertice<T> {
@@ -16,14 +17,18 @@ public class Vertice<T> {
 	
 	private int indice;
 	
+	private ArrayList<Arista<T>> aristas;
+	
 	public Vertice(T dato) {
 		this.dato = dato;
 		this.indice = 0;
+		this.aristas = new ArrayList<>();
 	}
 	
 	public Vertice(T dato, int indice) {
 		this.dato = dato;
 		this.indice = indice;
+		this.aristas = new ArrayList<>();
 	}
 	
 	public void setDato(T dato) {
@@ -80,6 +85,24 @@ public class Vertice<T> {
 	
 	public int getIndice() {
 		return this.indice;
+	}
+	
+	public ArrayList<Arista<T>> getAristas() {
+		return aristas;
+	}
+	
+	public void agregarArista(Vertice<T> destino) {
+		Arista<T> nuevaArista = new Arista<>(this, destino);
+		aristas.add(nuevaArista);
+	}
+	
+	public void agregarArista(Vertice<T> destino, int peso) {
+		Arista<T> nuevaArista = new Arista<>(this, destino, peso);
+		aristas.add(nuevaArista);
+	}
+	
+	public void eliminarArista(Vertice<T> destino) {
+		aristas.removeIf(arista -> arista.getDestino().equals(destino));
 	}
 	
 	public void ajustarPropiedadesParaBFS() {
