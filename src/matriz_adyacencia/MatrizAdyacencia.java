@@ -188,7 +188,38 @@ public class MatrizAdyacencia<T> {
 	}
 	
 	public void recorridoDFS() {
+		for (Vertice<T> v : vertices) {
+			v.ajustarPropiedadesParaDFS();
+		}
 		
+		int tiempo = 0;
+		
+		for (Vertice<T> v : vertices) {
+			if (v.getColor().equals(Color.BLANCO))
+				recorridoDFSVisitante(v, tiempo);
+		}
+	}
+	
+	public void recorridoDFSVisitante(Vertice<T> vertice, int tiempo) {
+		tiempo = tiempo + 1;
+		vertice.setTiempoInicial(tiempo);
+		vertice.setColor(Color.GRIS);
+		
+		int indice = vertice.getIndice();
+		
+		for (int i = 0 ; i < matrizAristas[indice].length ; i++) {
+			if (matrizAristas[indice][i] != null) {
+				Vertice<T> v = matrizAristas[indice][i].getDestino();
+				if (v.getColor().equals(Color.BLANCO)) {
+					v.setPadre(vertice);
+					recorridoDFSVisitante(v, tiempo);
+				}
+			}
+		}
+		
+		vertice.setColor(Color.NEGRO);
+		tiempo = tiempo + 1;
+		vertice.setTiempoFinal(tiempo);
 	}
 	
 }

@@ -11,6 +11,9 @@ public class Vertice<T> {
 	private int distancia;
 	private Vertice<T> padre;
 	
+	private int tiempoInicial;
+	private int tiempoFinal;
+	
 	private int indice;
 	
 	public Vertice(T dato) {
@@ -51,6 +54,22 @@ public class Vertice<T> {
 		this.padre = padre;
 	}
 	
+	public int getTiempoInicial() {
+		return tiempoInicial;
+	}
+	
+	public void setTiempoInicial(int tiempo) {
+		this.tiempoInicial = tiempo;
+	}
+	
+	public int getTiempoFinal() {
+		return tiempoFinal;
+	}
+	
+	public void setTiempoFinal(int tiempo) {
+		this.tiempoFinal = tiempo;
+	}
+	
 	public void setIndice(int indice) {
 		this.indice = indice;
 	}
@@ -66,6 +85,11 @@ public class Vertice<T> {
 	public void ajustarPropiedadesParaBFS() {
 		this.color = Color.BLANCO;
 		this.distancia = Integer.MAX_VALUE;
+		this.padre = null;
+	}
+	
+	public void ajustarPropiedadesParaDFS() {
+		this.color = Color.BLANCO;
 		this.padre = null;
 	}
 	
