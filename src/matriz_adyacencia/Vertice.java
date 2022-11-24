@@ -11,6 +11,11 @@ public class Vertice<T> {
 		this.indice = 0;
 	}
 	
+	public Vertice(T dato, int indice) {
+		this.dato = dato;
+		this.indice = indice;
+	}
+	
 	public void setDato(T dato) {
 		this.dato = dato;
 	}
@@ -26,5 +31,5 @@ public class Vertice<T> {
 	public int getIndice() {
 		return this.indice;
 	}
-
+	
 }

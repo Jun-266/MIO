@@ -7,6 +7,11 @@ public class Arista<T> {
 	
 	private int peso;
 	
+	public Arista(Vertice<T> origen, Vertice<T> destino) {
+		this.origen = origen;
+		this.destino = destino;
+	}
+	
 	public Arista(Vertice<T> origen, Vertice<T> destino, int peso) {
 		this.origen = origen;
 		this.destino = destino;
