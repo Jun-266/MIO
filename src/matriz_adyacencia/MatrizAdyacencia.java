@@ -1,5 +1,10 @@
 package matriz_adyacencia;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
+import enums.Color;
+
 public class MatrizAdyacencia<T> {
 	
 	public boolean esGrafoDirigido;
@@ -144,6 +149,46 @@ public class MatrizAdyacencia<T> {
 				matrizAristas[columna][fila] = null;
 			}
 		}
+	}
+	
+	public void recorridoBFS(Vertice<T> inicio) {
+		for (int i = 0 ; i < matrizAristas.length ; i++) {
+			for (int j = 0 ; j < matrizAristas[i].length ; j++) {
+				if ( matrizAristas[i][j] != null ) {
+					Arista<T> a = matrizAristas[i][j];
+					a.getOrigen().ajustarPropiedadesParaBFS();
+					a.getDestino().ajustarPropiedadesParaBFS();
+				}
+			}
+		}
+		
+		inicio.setColor(Color.GRIS);
+		inicio.setDistancia(0);
+		inicio.setPadre(null);
+		
+		Queue<Vertice<T>> q = new LinkedList<Vertice<T>>();
+		q.add(inicio);
+		
+		while ( !q.isEmpty() ) {
+			Vertice<T> u = q.poll();
+			int indice = u.getIndice();
+			for (int i = 0 ; i < matrizAristas[indice].length ; i++) {
+				if (matrizAristas[indice][i] != null) {
+					Vertice<T> v = matrizAristas[indice][i].getDestino();
+					if (v.getColor().equals(Color.BLANCO)) {
+						v.setColor(Color.GRIS);
+						v.setDistancia(u.getDistancia() + 1);
+						v.setPadre(u);
+						q.add(v);
+					}
+				}
+			}
+			u.setColor(Color.NEGRO);
+		}
+	}
+	
+	public void recorridoDFS() {
+		
 	}
 	
 }
