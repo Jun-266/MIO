@@ -7,7 +7,9 @@ public class Vertice<T> {
 	
 	private T dato;
 	
-	// Propiedades para el recorrido BFS.
+	private int clave;
+	
+	// Propiedades para el recorrido BFS y DFS.
 	private Color color;
 	private int distancia;
 	private Vertice<T> padre;
@@ -33,6 +35,14 @@ public class Vertice<T> {
 	
 	public void setDato(T dato) {
 		this.dato = dato;
+	}
+	
+	public void setClave(int clave) {
+		this.clave = clave;
+	}
+	
+	public int getClave() {
+		return clave;
 	}
 	
 	public Color getColor() {
@@ -112,6 +122,12 @@ public class Vertice<T> {
 	}
 	
 	public void ajustarPropiedadesParaDFS() {
+		this.color = Color.BLANCO;
+		this.padre = null;
+	}
+	
+	public void ajustarPropiedadesParaPrim() {
+		this.clave = Integer.MAX_VALUE;
 		this.color = Color.BLANCO;
 		this.padre = null;
 	}

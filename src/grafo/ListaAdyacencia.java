@@ -9,25 +9,19 @@ import enums.Color;
 public class ListaAdyacencia<T> {
 	
 	private boolean esGrafoDirigido;
-	private boolean esGrafoPonderado;
 	
 	private int tiempo;
 	
 	private List<Vertice<T>> vertices;
 	
-	public ListaAdyacencia(boolean esGrafoDirigido, boolean esGrafoPonderado) {
+	public ListaAdyacencia(boolean esGrafoDirigido) {
 		this.esGrafoDirigido = esGrafoDirigido;
-		this.esGrafoPonderado = esGrafoPonderado;
 		this.tiempo = 0;
 		this.vertices = new ArrayList<>();
 	}
 	
 	public boolean getEsGrafoDirigido() {
 		return esGrafoDirigido;
-	}
-	
-	public boolean getEsGrafoPonderado() {
-		return esGrafoPonderado;
 	}
 	
 	public int getTiempo() {
@@ -176,6 +170,49 @@ public class ListaAdyacencia<T> {
 		
 		// return y;
 		return false;
+	}
+	
+	public void algoritmoDePrim(Vertice<T> inicio) {
+		int total = 0;
+		
+		for (Vertice<T> v : vertices)
+			v.ajustarPropiedadesParaPrim();
+		
+		inicio.setClave(0);
+		inicio.setPadre(null);
+		
+		Queue<Vertice<T>> cp = new LinkedList<Vertice<T>>();
+		for (Vertice<T> v : vertices) {
+			cp.offer(v);
+		}
+		
+		while ( !cp.isEmpty() ) {
+			Vertice<T> u = cp.poll();
+			ArrayList<Arista<T>> aristas = u.getAristas();
+			for (Arista<T> a : aristas) {
+				Vertice<T> v = a.getDestino();
+				if (v.getColor().equals(Color.BLANCO) && (a.getPeso() < v.getClave())) {
+					v.setClave(a.getPeso());
+					v.setPadre(u);
+				}
+			}
+			u.setColor(Color.NEGRO);
+			System.out.println(u.getClave());
+		}
+		
+		int contador = 0;
+		for ( Vertice<T> v : vertices ) {
+			if (v.getColor().equals(Color.NEGRO)) {
+				total += v.getClave();
+				contador += 1;
+			}
+		}
+		
+		if ( contador == vertices.size() ) {
+			System.out.println("Funcionó!");
+		} else {
+			System.out.println("No funcionó!");
+		}
 	}
 
 }

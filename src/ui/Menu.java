@@ -1,8 +1,6 @@
 package ui;
 
-import enums.Color;
-import grafo.Arista;
-import grafo.MatrizAdyacencia;
+import grafo.ListaAdyacencia;
 import grafo.Vertice;
 
 public class Menu {
@@ -12,86 +10,40 @@ public class Menu {
 	}
 	
 	public static void main(String[] args) {
-		MatrizAdyacencia<String> grafo = new MatrizAdyacencia<>(5);
-		grafo.esGrafoDirigido = true;
-		grafo.agregarVertice("A");
-		grafo.agregarVertice("B");
-		grafo.agregarVertice("C");
-		grafo.agregarVertice("D");
-		grafo.agregarVertice("E");
-		
-		grafo.agregarAristaMatriz("A", "D");
-		grafo.agregarAristaMatriz("A", "B");
-		grafo.agregarAristaMatriz("A", "C");
-		grafo.agregarAristaMatriz("B", "C");
-		grafo.agregarAristaMatriz("C", "E");
-		grafo.agregarAristaMatriz("E", "A");
-		
-		Vertice<String>[] vs = grafo.vertices;
-		for (Vertice<String> v : vs) {
-			v.ajustarPropiedadesParaBFS();
-		}
-		
-		Arista<String>[][] as = grafo.matrizAristas;
-		for(int i = 0 ; i < as.length ; i++) {
-			for (int j = 0 ; j < as[i].length ; j++) {
-				if (as[i][j] != null) {
-					System.out.print("[Origen:" + as[i][j].getOrigen().getDistancia());
-					System.out.print("| Destino:" + as[i][j].getDestino().getDistancia() + "]");
-				} else {
-					System.out.print("[*]");
-				}
-			}
-			System.out.println();
-		}
+		ListaAdyacencia<String> la = new ListaAdyacencia<>(false);
 
-		// Vertice<String> inicio = grafo.buscarVertice("B");
-		// grafo.recorridoBFS(inicio);
-		/*
-		Arista<String>[][] ma = grafo.matrizAristas;
-		for (int i = 0 ; i < ma.length ; i++) {
-			for (int j = 0 ; j < ma[i].length ; j++) {
-				if (ma[i][j] != null) {
-					Arista<String> a = ma[i][j];
-					System.out.print("[Origen: " + a.getOrigen().getDato());
-					System.out.print("| Destino: " + a.getDestino().getDato() + "]");
-				} else {
-					System.out.print("[*]");
-				}
-			}
-			System.out.println();
-		}
+		Vertice<String> at = la.agregarVertice("At");
+		Vertice<String> ch = la.agregarVertice("Ch");
+		Vertice<String> de = la.agregarVertice("De");
+		Vertice<String> ny = la.agregarVertice("NY");
+		Vertice<String> sf = la.agregarVertice("SF");
 		
-		Vertice<String>[] vs = grafo.vertices;
-		for (int i = 0 ; i < vs.length ; i++) {
-			System.out.print("[" + vs[i].getColor() + "]");
-		}
+		at.agregarArista(ch, 700);
+		at.agregarArista(de, 1400);
+		at.agregarArista(ny, 800);
+		at.agregarArista(sf, 2200);
 		
-		for (int i = 0 ; i < ma.length ; i++) {
-			for (int j = 0 ; j < ma[i].length ; j++) {
-				if ( ma[i][j] != null ) {
-					System.out.print("[" + 1 + "]");
-				} else {
-					System.out.print("[" + "*" + "]");
-				}
-			}
-			System.out.println();
-		}
+		ch.agregarArista(at, 700);
+		ch.agregarArista(de, 1300);
+		ch.agregarArista(ny, 1000);
+		ch.agregarArista(sf, 1200);
 		
-		grafo.eliminarVertice("B");
-		System.out.println();
+		de.agregarArista(at, 1400);
+		de.agregarArista(ch, 1300);
+		de.agregarArista(ny, 1600);
+		de.agregarArista(sf, 900);
 		
-		for (int i = 0 ; i < ma.length ; i++) {
-			for (int j = 0 ; j < ma[i].length ; j++) {
-				if ( ma[i][j] != null ) {
-					System.out.print("[" + 1 + "]");
-				} else {
-					System.out.print("[" + "*" + "]");
-				}
-			}
-			System.out.println();
-		}
-		*/
+		ny.agregarArista(at, 800);
+		ny.agregarArista(ch, 1000);
+		ny.agregarArista(de, 1600);
+		ny.agregarArista(sf, 2000);
+		
+		sf.agregarArista(at, 2200);
+		sf.agregarArista(ch, 1200);
+		sf.agregarArista(de, 900);
+		sf.agregarArista(ny, 2000);
+		
+		la.algoritmoDePrim(at);
 	}
 	
 }
