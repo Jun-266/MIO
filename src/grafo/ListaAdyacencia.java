@@ -1,8 +1,12 @@
 package grafo;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Queue;
 import java.util.LinkedList;
+import java.util.PriorityQueue;
+
 import enums.Color;
 
 public class ListaAdyacencia<T> {
@@ -260,15 +264,16 @@ public class ListaAdyacencia<T> {
 	public void algoritmoDePrim(Vertice<T> inicio) {
 		for (Vertice<T> v : vertices)
 			v.ajustarPropiedadesParaPrim();
-		
+
 		inicio.setClave(0);
 		inicio.setPadre(null);
-		
-		Queue<Vertice<T>> cp = new LinkedList<Vertice<T>>();
+
+		Comparator<Vertice<T>> comparator = new VeticesComparator<T>();
+		PriorityQueue<Vertice<T>> cp = new PriorityQueue<>(30,comparator );
 		for (Vertice<T> v : vertices) {
 			cp.offer(v);
 		}
-		
+
 		while ( !cp.isEmpty() ) {
 			Vertice<T> u = cp.poll();
 			ArrayList<Arista<T>> aristas = u.getAristas();
@@ -280,7 +285,74 @@ public class ListaAdyacencia<T> {
 				}
 			}
 			u.setColor(Color.NEGRO);
+			PriorityQueue<Vertice<T>> cp2 = new PriorityQueue<>(30,comparator );
+			while(!cp.isEmpty()) {
+				cp2.add(cp.poll());
+			}
+			cp=cp2;
+			cp2.clear();
 		}
 	}
-
+	
+	public ArrayList<Arista<T>> kruskal() {
+		ArrayList<Arista<T>> set= new ArrayList<>();
+		ArrayList<Arista<T>> path= new ArrayList<>();
+		
+		for(Vertice<T> ad: vertices) {
+			set.addAll(ad.getAristas());
+		}
+		
+		Collections.sort(set);
+		
+		for(Arista<T> cnx: set) {
+			Vertice<T> org=cnx.getOrigen();
+			Vertice<T> dst=cnx.getDestino();
+			if(!org.getMiembros().contains(dst)) {
+				path.add(cnx);
+				org.getMiembros().addAll(dst.getMiembros());
+				
+				for(Vertice<T> vt : org.getMiembros()) {
+					vt.setMiembros(org.getMiembros());
+				}
+			}
+		}
+		
+		return path;
+	}
+	
+	public Vertice<T> dijkstra(Vertice<T> src){
+		
+		for(Vertice<T> v: vertices) {
+			v.ajustarPropiedadesParaDikjstra();
+		}
+		
+		src.setDistancia(0);
+		
+		PriorityQueue<Vertice<T>> pq= new PriorityQueue<>(30, new VerticeComparatorDj<T>());
+		pq.addAll(vertices);
+		Vertice<T> u = null;
+		
+		while(!pq.isEmpty()) {
+			u = pq.poll();
+			for(Arista<T> a: u.getAristas()) {
+				Vertice<T> v = a.getDestino();
+				int alt= u.getDistancia()+a.getPeso();
+				
+				if(alt<v.getDistancia()) {
+					v.setDistancia(alt);
+					v.setPadre(u);
+				}
+			}
+			
+			PriorityQueue<Vertice<T>> pq2= new PriorityQueue<>(30, new VerticeComparatorDj<T>());
+			while(!pq.isEmpty()) {
+				pq2.add(pq.poll());
+			}
+			pq = pq2;
+			pq2.clear();
+		}
+		
+		return u;
+	}
+	
 }

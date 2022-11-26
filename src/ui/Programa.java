@@ -170,7 +170,6 @@ public class Programa {
 						System.out.println("No se pudo agregar la ruta porque no se encontraron las estaciones");
 						System.out.println();
 					}
-					*/
 				}
 
 				terminado = true;

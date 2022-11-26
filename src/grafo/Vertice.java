@@ -3,7 +3,7 @@ package grafo;
 import java.util.ArrayList;
 import enums.Color;
 
-public class Vertice<T> {
+public class Vertice<T>{
 	
 	private T dato;
 	
@@ -20,17 +20,22 @@ public class Vertice<T> {
 	private int indice;
 	
 	private ArrayList<Arista<T>> aristas;
+	private ArrayList<Vertice<T>> miembros;
 	
 	public Vertice(T dato) {
 		this.dato = dato;
 		this.indice = 0;
 		this.aristas = new ArrayList<>();
+		miembros= new ArrayList<>();
+		miembros.add(this);
 	}
 	
 	public Vertice(T dato, int indice) {
 		this.dato = dato;
 		this.indice = indice;
 		this.aristas = new ArrayList<>();
+		miembros= new ArrayList<>();
+		miembros.add(this);
 	}
 	
 	public void setDato(T dato) {
@@ -97,6 +102,14 @@ public class Vertice<T> {
 		return this.indice;
 	}
 	
+	public ArrayList<Vertice<T>> getMiembros() {
+		return miembros;
+	}
+
+	public void setMiembros(ArrayList<Vertice<T>> miembros) {
+		this.miembros = miembros;
+	}
+	
 	public ArrayList<Arista<T>> getAristas() {
 		return aristas;
 	}
@@ -146,6 +159,11 @@ public class Vertice<T> {
 		this.padre = null;
 	}
 	
+	public void ajustarPropiedadesParaDikjstra() {
+		distancia = Integer.MAX_VALUE;
+		padre=null;
+	}
+
 	public void quickSort(ArrayList<Arista<T>> as, int izq, int der) {
 		Arista<T> pivote = as.get(izq);
 		
@@ -177,5 +195,4 @@ public class Vertice<T> {
 			quickSort(as, (j + 1), der);
 			
 	}
-	
 }
