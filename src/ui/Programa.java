@@ -41,6 +41,7 @@ public class Programa {
 					opcion1();
 					break;
 				case 2:
+					opcion2();
 					break;
 				case 3:
 					break;
@@ -69,7 +70,7 @@ public class Programa {
 			}
 		}
 	}
-	
+
 	public void opcion1() {
 		BufferedReader lector = new BufferedReader(new InputStreamReader(System.in));
 		System.out.print("Escribe el nombre de la estación: ");
@@ -83,21 +84,41 @@ public class Programa {
 			System.out.println("Error en el flujo de entrada de datos.");
 		}
 	}
-	
+
 	public void opcion2() {
-		
+		BufferedReader lector = new BufferedReader(new InputStreamReader(System.in));
+		System.out.print("Escribe el nombre de la estación: ");
+		try {
+			String nombreEstacion = lector.readLine();
+			boolean a = sistemaMIO.eliminarEstacionLED(nombreEstacion);
+			boolean b = sistemaMIO.eliminarEstacionLET(nombreEstacion);
+			boolean c = sistemaMIO.eliminarEstacionMED(nombreEstacion);
+			boolean d = sistemaMIO.eliminarEstacionMET(nombreEstacion);
+
+			if (a && b && c && d) {
+				System.out.println();
+				System.out.println("La estación ha sido eliminada.");
+				System.out.println();
+			} else {
+				System.out.println();
+				System.out.println("La estación no existe.");
+				System.out.println();
+			}
+		} catch (IOException e) {
+			System.out.println("Error en el flujo de entrada de datos.");
+		}
 	}
-	
+
 	public void opcion3() {
-		
+
 	}
-	
+
 	public void opcion4() {
-		
+
 	}
-	
+
 	public void opcion5() {
-		
+
 	}
 
 	public static void main(String[] args) {

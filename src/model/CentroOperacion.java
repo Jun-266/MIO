@@ -45,11 +45,20 @@ public class CentroOperacion {
 		matrizEstacionesTiempo.agregarVertice(nombreEstacion);
 	}
 	
-	public void eliminarEstacion(String nombreEstacion) {
-		listaEstacionesDistancia.eliminarVertice(nombreEstacion);
-		listaEstacionesTiempo.eliminarVertice(nombreEstacion);
-		matrizEstacionesDistancia.eliminarVertice(nombreEstacion);
-		matrizEstacionesTiempo.eliminarVertice(nombreEstacion);
+	public boolean eliminarEstacionLED(String nombreEstacion) {
+		return listaEstacionesDistancia.eliminarVertice(nombreEstacion);
+	}
+	
+	public boolean eliminarEstacionLET(String nombreEstacion) {
+		return listaEstacionesTiempo.eliminarVertice(nombreEstacion);
+	}
+	
+	public boolean eliminarEstacionMED(String nombreEstacion) {
+		return matrizEstacionesDistancia.eliminarVertice(nombreEstacion);
+	}
+	
+	public boolean eliminarEstacionMET(String nombreEstacion) {
+		return matrizEstacionesTiempo.eliminarVertice(nombreEstacion);
 	}
 	
 	public Vertice<String> buscarVerticeListaEstacionesDistancia(String nombreEstacion) {
