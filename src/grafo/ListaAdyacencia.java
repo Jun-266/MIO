@@ -269,7 +269,7 @@ public class ListaAdyacencia<T> {
 		inicio.setPadre(null);
 
 		Comparator<Vertice<T>> comparator = new VeticesComparator<T>();
-		PriorityQueue<Vertice<T>> cp = new PriorityQueue<>(30,comparator );
+		PriorityQueue<Vertice<T>> cp = new PriorityQueue<>(61,comparator );
 		for (Vertice<T> v : vertices) {
 			cp.offer(v);
 		}
@@ -285,7 +285,7 @@ public class ListaAdyacencia<T> {
 				}
 			}
 			u.setColor(Color.NEGRO);
-			PriorityQueue<Vertice<T>> cp2 = new PriorityQueue<>(30,comparator );
+			PriorityQueue<Vertice<T>> cp2 = new PriorityQueue<>(61,comparator );
 			while(!cp.isEmpty()) {
 				cp2.add(cp.poll());
 			}
@@ -328,7 +328,7 @@ public class ListaAdyacencia<T> {
 		
 		src.setDistancia(0);
 		
-		PriorityQueue<Vertice<T>> pq= new PriorityQueue<>(30, new VerticeComparatorDj<T>());
+		PriorityQueue<Vertice<T>> pq= new PriorityQueue<>(61, new VerticeComparatorDj<T>());
 		pq.addAll(vertices);
 		Vertice<T> u = null;
 		
@@ -344,7 +344,7 @@ public class ListaAdyacencia<T> {
 				}
 			}
 			
-			PriorityQueue<Vertice<T>> pq2= new PriorityQueue<>(30, new VerticeComparatorDj<T>());
+			PriorityQueue<Vertice<T>> pq2= new PriorityQueue<>(61, new VerticeComparatorDj<T>());
 			while(!pq.isEmpty()) {
 				pq2.add(pq.poll());
 			}

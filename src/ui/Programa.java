@@ -51,8 +51,10 @@ public class Programa {
 					opcion4();
 					break;
 				case 5:
+					opcion5();
 					break;
 				case 6:
+					opcion6();
 					break;
 				case 7:
 					opcion7();
@@ -96,11 +98,9 @@ public class Programa {
 		try {
 			String nombreEstacion = lector.readLine();
 			boolean a = sistemaMIO.eliminarEstacionLED(nombreEstacion);
-			boolean b = sistemaMIO.eliminarEstacionLET(nombreEstacion);
 			boolean c = sistemaMIO.eliminarEstacionMED(nombreEstacion);
-			boolean d = sistemaMIO.eliminarEstacionMET(nombreEstacion);
 
-			if (a && b && c && d) {
+			if (a && c) {
 				System.out.println();
 				System.out.println("La estación ha sido eliminada.");
 				System.out.println();
@@ -120,11 +120,9 @@ public class Programa {
 		try {
 			String nombreEstacion = lector.readLine();
 			Vertice<String> a = sistemaMIO.buscarEstacionLED(nombreEstacion);
-			Vertice<String> b = sistemaMIO.buscarEstacionLET(nombreEstacion);
 			Vertice<String> c = sistemaMIO.buscarEstacionMED(nombreEstacion);
-			Vertice<String> d = sistemaMIO.buscarEstacionMET(nombreEstacion);
 
-			if (a != null && b != null && c != null && d != null) {
+			if (a != null && c != null ) {
 				System.out.println();
 				System.out.println("¡Estación encontrada!");
 				System.out.println("Nombre de la estación: " + a.getDato());
@@ -166,6 +164,57 @@ public class Programa {
 				System.out.println("Error en el flujo de entrada de datos.");
 				terminado = true;
 			}
+		}
+	}
+	
+	public void opcion5() {
+		BufferedReader lector = new BufferedReader(new InputStreamReader(System.in));
+		try {
+			System.out.println("Escribe el nombre de la estación origen: ");
+			String origen = lector.readLine();
+			System.out.print("Escribe el nombre de la estación destino: ");
+			String destino = lector.readLine();
+			System.out.println("Escribe la distancia entre las dos estaciones");
+			int peso =Integer.parseInt(lector.readLine()) ;
+
+			if (origen.equals(destino)) {
+				System.out.println();
+				System.out.println("No se permiten estaciones de origen y destino con el mismo valor.");
+				System.out.println();
+			} else {
+				System.out.println();
+				System.out.println(sistemaMIO.agregarArista(origen,destino,peso));
+				System.out.println();
+			}
+
+			lector.close();
+		} catch (IOException e) {
+			System.out.println("Error en el flujo de entrada de datos.");
+		}
+	}
+	
+	
+	public void opcion6() {
+		BufferedReader lector = new BufferedReader(new InputStreamReader(System.in));
+		try {
+			System.out.println("Escribe el nombre de la estación origen: ");
+			String origen = lector.readLine();
+			System.out.print("Escribe el nombre de la estación destino: ");
+			String destino = lector.readLine();
+
+			if (origen.equals(destino)) {
+				System.out.println();
+				System.out.println("No se permiten estaciones de origen y destino con el mismo valor.");
+				System.out.println();
+			} else {
+				System.out.println();
+				System.out.println(sistemaMIO.eliminarArista(origen,destino));
+				System.out.println();
+			}
+
+			lector.close();
+		} catch (IOException e) {
+			System.out.println("Error en el flujo de entrada de datos.");
 		}
 	}
 
