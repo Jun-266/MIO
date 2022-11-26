@@ -132,4 +132,36 @@ public class Vertice<T> {
 		this.padre = null;
 	}
 	
+	public void quickSort(ArrayList<Arista<T>> as, int izq, int der) {
+		Arista<T> pivote = as.get(izq);
+		
+		int i = izq;
+		int j = der;
+		Arista<T> aux;
+		
+		while (i < j) {
+			while ((as.get(i).getPeso() <= pivote.getPeso()) && (i < j))
+				i++;
+			
+			while (as.get(j).getPeso() > pivote.getPeso()) 
+				j--;
+			
+			if (i < j) {
+				aux = as.get(i);
+				as.set(i, as.get(j));
+				as.set(j, aux);
+			}
+		}
+		
+		as.set(izq, as.get(j));
+		as.set(j, pivote);
+		
+		if (izq < (j - 1)) 
+			quickSort(as, izq, (j - 1));
+
+		if ((j + 1) < der) 
+			quickSort(as, (j + 1), der);
+			
+	}
+	
 }

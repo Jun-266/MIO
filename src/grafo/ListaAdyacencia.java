@@ -1,7 +1,6 @@
 package grafo;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Queue;
 import java.util.LinkedList;
 import enums.Color;
@@ -12,7 +11,7 @@ public class ListaAdyacencia<T> {
 	
 	private int tiempo;
 	
-	private List<Vertice<T>> vertices;
+	private ArrayList<Vertice<T>> vertices;
 	
 	public ListaAdyacencia(boolean esGrafoDirigido) {
 		this.esGrafoDirigido = esGrafoDirigido;
@@ -28,10 +27,11 @@ public class ListaAdyacencia<T> {
 		return tiempo;
 	}
 	
-	public List<Vertice<T>> getVertices() {
+	public ArrayList<Vertice<T>> getVertices() {
 		return vertices;
 	}
 	
+	/*
 	public Vertice<T> agregarVertice(T dato) {
 		Vertice<T> nuevoVertice = new Vertice<T>(dato);
 		vertices.add(nuevoVertice);
@@ -77,7 +77,86 @@ public class ListaAdyacencia<T> {
 		}
 		return null;
 	}
+	*/
+	public void agregarVertice(T dato) {
+		Vertice<T> nuevo = new Vertice<T>(dato);
+		vertices.add(nuevo);
+	}
 	
+	public Vertice<T> buscarVertice(T dato) {
+		if (!vertices.isEmpty()) {
+			for (Vertice<T> v : vertices) {
+				if (v.getDato().equals(dato)) {
+					return v;
+				}
+			}
+		}
+		return null;
+	}
+	
+	public boolean eliminarVertice(T dato) {
+		if (!vertices.isEmpty()) {
+			for ( Vertice<T> v : vertices ) {
+				if (v.getDato().equals(dato)) {
+					vertices.remove(v);
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	public boolean agregarArista(T datoOrigen, T datoDestino) {
+		Vertice<T> origen = buscarVertice(datoOrigen);
+		Vertice<T> destino = buscarVertice(datoDestino);
+		
+		if ((origen != null) && (destino != null)) {
+			if (esGrafoDirigido) {
+				origen.agregarArista(destino);
+				return true;
+			} else {
+				origen.agregarArista(destino);
+				destino.agregarArista(origen);
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean agregarArista(T datoOrigen, T datoDestino, int peso) {
+		Vertice<T> origen = buscarVertice(datoOrigen);
+		Vertice<T> destino = buscarVertice(datoDestino);
+		
+		if ((origen != null) && (destino != null)) {
+			if (esGrafoDirigido) {
+				origen.agregarArista(destino, peso);
+				return true;
+			} else {
+				origen.agregarArista(destino, peso);
+				destino.agregarArista(origen, peso);
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean eliminarArista(T datoOrigen, T datoDestino) {
+		Vertice<T> origen = buscarVertice(datoOrigen);
+		Vertice<T> destino = buscarVertice(datoDestino);
+		
+		if (origen != null && destino != null) {
+			if (esGrafoDirigido) {
+				origen.eliminarArista(destino);
+				return true;
+			} else {
+				origen.eliminarArista(destino);
+				destino.eliminarArista(origen);
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public void reiniciarTiempo() {
 		tiempo = 0;
 	}
@@ -99,7 +178,7 @@ public class ListaAdyacencia<T> {
 		u.setTiempoInicial(tiempo);
 		u.setColor(Color.GRIS);
 		
-		List<Arista<T>> verticesAdyacentes = u.getAristas();
+		ArrayList<Arista<T>> verticesAdyacentes = u.getAristas();
 		for ( Arista<T> arista: verticesAdyacentes ) {
 			Vertice<T> v = arista.getDestino();
 			if ( v.getColor().equals(Color.BLANCO) ) {
@@ -126,7 +205,7 @@ public class ListaAdyacencia<T> {
 		
 		while ( !colaDeVertices.isEmpty() ) {
 			Vertice<T> v = colaDeVertices.poll();
-			List<Arista<T>> aristas = v.getAristas();
+			ArrayList<Arista<T>> aristas = v.getAristas();
 			for (Arista<T> a : aristas) {
 				Vertice<T> w = a.getDestino();
 				if ( w.getColor().equals(Color.BLANCO) ) {
@@ -173,8 +252,6 @@ public class ListaAdyacencia<T> {
 	}
 	
 	public void algoritmoDePrim(Vertice<T> inicio) {
-		int total = 0;
-		
 		for (Vertice<T> v : vertices)
 			v.ajustarPropiedadesParaPrim();
 		
@@ -197,21 +274,6 @@ public class ListaAdyacencia<T> {
 				}
 			}
 			u.setColor(Color.NEGRO);
-			System.out.println(u.getClave());
-		}
-		
-		int contador = 0;
-		for ( Vertice<T> v : vertices ) {
-			if (v.getColor().equals(Color.NEGRO)) {
-				total += v.getClave();
-				contador += 1;
-			}
-		}
-		
-		if ( contador == vertices.size() ) {
-			System.out.println("Funcionó!");
-		} else {
-			System.out.println("No funcionó!");
 		}
 	}
 
