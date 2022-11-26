@@ -3,6 +3,7 @@ package model;
 import grafo.ListaAdyacencia;
 import grafo.MatrizAdyacencia;
 import grafo.Vertice;
+import enums.Color;
 
 public class CentroOperacion {
 	
@@ -81,8 +82,49 @@ public class CentroOperacion {
 		return matrizEstacionesDistancia.agregarAristaMatriz(origen, destino, distancia);
 	}
 	
-	public boolean agregarRutaTiempo(String origen, String destino, int tiempo) {
-		return matrizEstacionesTiempo.agregarAristaMatriz(origen, destino, tiempo);
+	public String calcularRutaMenor(String origen, String destino) {
+		String msg="";
+		Vertice<String> src=buscarEstacionLED(origen);
+		Vertice<String> dst=buscarEstacionLED(destino);
+		
+		if(dst!=null && src!=null)
+			src=listaEstacionesDistancia.dijkstra(src);
+		else
+			return "No existe una estación de origen con el nombre dado y/o una esteción de destino con este nombre";
+		
+		boolean conti=true;
+		while(src!=null && conti) {
+			if(src.getPadre()!=null)
+				msg+=src.getDato()+" <==";
+			else
+				msg+=src.getDato();
+			
+			if(src.equals(dst))
+				conti=false;
+			
+			src=src.getPadre();
+		}
+		
+		return msg;
+		
+	}
+	
+	public String esAccesible(String origen, String destino) {
+		Vertice<String> src=buscarEstacionLED(origen);
+		Vertice<String> dst=buscarEstacionLED(destino);
+		
+		if(dst!=null && src!=null)
+			src=listaEstacionesDistancia.dijkstra(src);
+		else
+			return "No existe una estación de origen con el nombre dado y/o una esteción de destino con este nombre";
+		
+		listaEstacionesDistancia.recorridoBFS(src);
+		
+		if(dst.getColor().equals(Color.BLANCO))
+			return "No se puede acceder a esta estación desde este punto de origen";
+		else
+			return "Si hay acceso desde este punto de origen al destino";
+					
 	}
 
 }
