@@ -28,10 +28,10 @@ public class Programa {
 				System.out.println("1) Agregar una estación.");
 				System.out.println("2) Eliminar una estación.");
 				System.out.println("3) Comprobar si una estación existe.");
-				System.out.println("4) Agregar una ruta con tiempo especifico.");
+				System.out.println("4) Calcular la ruta con menor coste");
 				System.out.println("5) Agregar una ruta con una distancia especifica.");
 				System.out.println("6) Eliminar una ruta que contiene distancia.");
-				System.out.println("7) Eliminar una ruta que contiene tiempo.");
+				System.out.println("7) Consultar accesibilidad de un punto a otro");
 				System.out.println("8) Salir");
 
 				String input = lector.readLine();
@@ -83,6 +83,7 @@ public class Programa {
 			System.out.println();
 			System.out.println("¡La estación fue agregada de manera exitosa!");
 			System.out.println();
+			lector.close();
 		} catch (IOException e) {
 			System.out.println("Error en el flujo de entrada de datos.");
 		}

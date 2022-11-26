@@ -1,6 +1,6 @@
 package grafo;
 
-public class Arista<T> {
+public class Arista<T> implements Comparable<Arista<T>> {
 	
 	private Vertice<T> origen;
 	private Vertice<T> destino;
@@ -40,6 +40,15 @@ public class Arista<T> {
 
 	public void setPeso(int peso) {
 		this.peso = peso;
+	}
+	
+	@Override
+	public int compareTo(Arista<T> b) {
+		 if (this.peso < b.peso)
+	            return -1;
+	     if (this.peso > b.peso) 
+	            return 1;
+		return 0;
 	}
 	
 }
