@@ -96,6 +96,12 @@ public class ListaAdyacencia<T> {
 	
 	public boolean eliminarVertice(T dato) {
 		if (!vertices.isEmpty()) {
+			
+			// Elimina las aristas adyacentes al vertice a eliminar.
+			for (Vertice<T> v : vertices) {
+				v.eliminarArista(dato);
+			}
+			
 			for ( Vertice<T> v : vertices ) {
 				if (v.getDato().equals(dato)) {
 					vertices.remove(v);

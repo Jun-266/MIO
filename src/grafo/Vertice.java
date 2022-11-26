@@ -115,6 +115,20 @@ public class Vertice<T> {
 		aristas.removeIf(arista -> arista.getDestino().equals(destino));
 	}
 	
+	public boolean eliminarArista(T dato) {
+		if (!aristas.isEmpty()) {
+			for (int i = 0 ; i < aristas.size() ; i++) {
+				Vertice<T> destino = aristas.get(i).getDestino();
+				if (destino.getDato().equals(dato)) {
+					aristas.remove(i);
+					return true;
+				}
+			}
+		}
+		
+		return false;
+	}
+	
 	public void ajustarPropiedadesParaBFS() {
 		this.color = Color.BLANCO;
 		this.distancia = Integer.MAX_VALUE;

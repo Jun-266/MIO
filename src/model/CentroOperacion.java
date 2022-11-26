@@ -11,15 +11,9 @@ public class CentroOperacion {
 	private ListaAdyacencia<String> listaEstacionesDistancia;
 	private MatrizAdyacencia<String> matrizEstacionesDistancia;
 	
-	private ListaAdyacencia<String> listaEstacionesTiempo;
-	private MatrizAdyacencia<String> matrizEstacionesTiempo;
-	
 	public CentroOperacion() {
 		this.listaEstacionesDistancia = new ListaAdyacencia<>(true);
 		this.matrizEstacionesDistancia = new MatrizAdyacencia<>(NUMERO_VERTICES);
-		
-		this.listaEstacionesTiempo = new ListaAdyacencia<>(true);
-		this.matrizEstacionesTiempo = new MatrizAdyacencia<>(NUMERO_VERTICES);
 	}
 	
 	public ListaAdyacencia<String> getListaEstacionesDistancia() {
@@ -30,59 +24,46 @@ public class CentroOperacion {
 		return this.matrizEstacionesDistancia;
 	}
 	
-	public ListaAdyacencia<String> getListaEstacionesTiempo() {
-		return listaEstacionesTiempo;
-	}
-
-	public MatrizAdyacencia<String> getMatrizEstacionesTiempo() {
-		return matrizEstacionesTiempo;
-	}
-
 	public void agregarEstacion(String nombreEstacion) {
 		listaEstacionesDistancia.agregarVertice(nombreEstacion);
-		listaEstacionesTiempo.agregarVertice(nombreEstacion);
 		matrizEstacionesDistancia.agregarVertice(nombreEstacion);
-		matrizEstacionesTiempo.agregarVertice(nombreEstacion);
 	}
 	
 	public boolean eliminarEstacionLED(String nombreEstacion) {
 		return listaEstacionesDistancia.eliminarVertice(nombreEstacion);
 	}
 	
-	public boolean eliminarEstacionLET(String nombreEstacion) {
-		return listaEstacionesTiempo.eliminarVertice(nombreEstacion);
-	}
-	
 	public boolean eliminarEstacionMED(String nombreEstacion) {
 		return matrizEstacionesDistancia.eliminarVertice(nombreEstacion);
-	}
-	
-	public boolean eliminarEstacionMET(String nombreEstacion) {
-		return matrizEstacionesTiempo.eliminarVertice(nombreEstacion);
 	}
 	
 	public Vertice<String> buscarEstacionLED(String nombreEstacion) {
 		return listaEstacionesDistancia.buscarVertice(nombreEstacion);
 	}
 	
-	public Vertice<String> buscarEstacionLET(String nombreEstacion) {
-		return listaEstacionesTiempo.buscarVertice(nombreEstacion);
-	}
-	
 	public Vertice<String> buscarEstacionMED(String nombreEstacion) {
 		return matrizEstacionesDistancia.buscarVertice(nombreEstacion);
 	}
 	
-	public Vertice<String> buscarEstacionMET(String nombreEstacion) {
-		return matrizEstacionesTiempo.buscarVertice(nombreEstacion);
-	}
-	
 	public boolean agregarRutaDistancia(String origen, String destino, int distancia) {
-		return matrizEstacionesDistancia.agregarAristaMatriz(origen, destino, distancia);
+		boolean a, b;
+		a = matrizEstacionesDistancia.agregarAristaMatriz(origen, destino, distancia);
+		b = listaEstacionesDistancia.agregarArista(origen, destino, distancia);
+		if ( a && b ) 
+			return true;
+		
+		return false;
 	}
 	
-	public boolean agregarRutaTiempo(String origen, String destino, int tiempo) {
-		return matrizEstacionesTiempo.agregarAristaMatriz(origen, destino, tiempo);
-	}
+	public boolean eliminarRutaDistancia(String origen, String destino) {
+		boolean a, b;
+		a = matrizEstacionesDistancia.eliminarAristaMatriz(origen, destino);
+		b = listaEstacionesDistancia.eliminarArista(origen, destino);
+		
+		if (a && b)
+			return true;
 
+		return false;
+	}
+	
 }
