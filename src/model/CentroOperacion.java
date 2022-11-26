@@ -87,10 +87,17 @@ public class CentroOperacion {
 		Vertice<String> src=buscarEstacionLED(origen);
 		Vertice<String> dst=buscarEstacionLED(destino);
 		
-		if(dst!=null && src!=null)
+		if(dst!=null && src!=null) {
+			listaEstacionesDistancia.recorridoBFS(src);
+			if(dst.getColor().equals(Color.BLANCO))
+				return "No se puede acceder a esta estación desde este punto de origen";
+			
 			src=listaEstacionesDistancia.dijkstra(src);
+		}
+			
 		else
 			return "No existe una estación de origen con el nombre dado y/o una esteción de destino con este nombre";
+	
 		
 		boolean conti=true;
 		while(src!=null && conti) {
