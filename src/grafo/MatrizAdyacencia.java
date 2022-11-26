@@ -87,7 +87,7 @@ public class MatrizAdyacencia<T> {
 		return false;
 	}
 
-	public void agregarAristaMatriz(T datoVerticeOrigen, T datoVerticeDestino) {
+	public boolean agregarAristaMatriz(T datoVerticeOrigen, T datoVerticeDestino) {
 		Vertice<T> origen = buscarVertice(datoVerticeOrigen);
 		Vertice<T> destino = buscarVertice(datoVerticeDestino);
 
@@ -98,16 +98,20 @@ public class MatrizAdyacencia<T> {
 			if (esGrafoDirigido) {
 				Arista<T> arista = new Arista<>(origen, destino);
 				matrizAristas[fila][columna] = arista;
+				return true;
 			} else {
 				Arista<T> a1 = new Arista<>(origen, destino);
 				Arista<T> a2 = new Arista<>(destino, origen);
 				matrizAristas[fila][columna] = a1;
 				matrizAristas[columna][fila] = a2;
+				return true;
 			}
 		}
+		
+		return false;
 	}
 
-	public void agregarAristaMatriz(T datoVerticeOrigen, T datoVerticeDestino, int peso) {
+	public boolean agregarAristaMatriz(T datoVerticeOrigen, T datoVerticeDestino, int peso) {
 		Vertice<T> origen = buscarVertice(datoVerticeOrigen);
 		Vertice<T> destino = buscarVertice(datoVerticeDestino);
 
@@ -119,6 +123,7 @@ public class MatrizAdyacencia<T> {
 				Arista<T> arista = new Arista<>(origen, destino, peso);
 				matrizAristas[fila][columna] = arista;
 				matrizConPesos[fila][columna] = arista.getPeso();
+				return true;
 			} else {
 				Arista<T> a1 = new Arista<>(origen, destino, peso);
 				Arista<T> a2 = new Arista<>(destino, origen, peso);
@@ -126,8 +131,11 @@ public class MatrizAdyacencia<T> {
 				matrizConPesos[fila][columna] = a1.getPeso();
 				matrizAristas[columna][fila] = a2;
 				matrizConPesos[columna][fila] = a2.getPeso();
+				return true;
 			}
 		}
+		
+		return false;
 	}
 
 	public boolean comprobarExistenciaArista(T datoVerticeOrigen, T datoVerticeDestino) {
@@ -145,7 +153,7 @@ public class MatrizAdyacencia<T> {
 		return false;
 	}
 
-	public void eliminarAristaMatriz(T datoVerticeOrigen, T datoVerticeDestino) {
+	public boolean eliminarAristaMatriz(T datoVerticeOrigen, T datoVerticeDestino) {
 		Vertice<T> origen = buscarVertice(datoVerticeOrigen);
 		Vertice<T> destino = buscarVertice(datoVerticeDestino);
 
@@ -155,11 +163,15 @@ public class MatrizAdyacencia<T> {
 
 			if (esGrafoDirigido) {
 				matrizAristas[fila][columna] = null;
+				return true;
 			} else {
 				matrizAristas[fila][columna] = null;
 				matrizAristas[columna][fila] = null;
+				return true;
 			}
 		}
+		
+		return false;
 	}
 
 	public void recorridoBFS(Vertice<T> inicio) {

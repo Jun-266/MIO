@@ -61,20 +61,28 @@ public class CentroOperacion {
 		return matrizEstacionesTiempo.eliminarVertice(nombreEstacion);
 	}
 	
-	public Vertice<String> buscarVerticeListaEstacionesDistancia(String nombreEstacion) {
+	public Vertice<String> buscarEstacionLED(String nombreEstacion) {
 		return listaEstacionesDistancia.buscarVertice(nombreEstacion);
 	}
 	
-	public Vertice<String> buscarVerticeListaEstacionesTiempo(String nombreEstacion) {
+	public Vertice<String> buscarEstacionLET(String nombreEstacion) {
 		return listaEstacionesTiempo.buscarVertice(nombreEstacion);
 	}
 	
-	public Vertice<String> buscarVerticeMatrizEstacionesDistancia(String nombreEstacion) {
+	public Vertice<String> buscarEstacionMED(String nombreEstacion) {
 		return matrizEstacionesDistancia.buscarVertice(nombreEstacion);
 	}
 	
-	public Vertice<String> buscarVerticeMatrizEstacionesTiempo(String nombreEstacion) {
+	public Vertice<String> buscarEstacionMET(String nombreEstacion) {
 		return matrizEstacionesTiempo.buscarVertice(nombreEstacion);
+	}
+	
+	public boolean agregarRutaDistancia(String origen, String destino, int distancia) {
+		return matrizEstacionesDistancia.agregarAristaMatriz(origen, destino, distancia);
+	}
+	
+	public boolean agregarRutaTiempo(String origen, String destino, int tiempo) {
+		return matrizEstacionesTiempo.agregarAristaMatriz(origen, destino, tiempo);
 	}
 
 }
